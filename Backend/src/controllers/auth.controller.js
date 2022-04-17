@@ -21,7 +21,7 @@ const register = async (req, res) => {
       const token = newToken(user);  
       res.send({ user, token });
     }else{
-      res.status(400).send({Error : "Request failed"})
+      res.status(400).send({Error : "Request failed => Manager can register here"})
     }
 
   } catch (err) {

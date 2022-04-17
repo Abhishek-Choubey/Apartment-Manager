@@ -41,16 +41,6 @@ module.exports = async (req, res, next) => {
   // if token is valid then we will put the user retrieved from the token in the req object
   req.user = user.user;
   
-
-  // user : {
-  //   user : {
-  //     _id : "_84375648375604237";     
-  //     name : "Abhishek";
-  //     email : "achoubey473@gmail.com";
-  //     password : "475yirdm9";      
-  //   }
-  // }
-  
   // console.log(user)
   return next();
 };

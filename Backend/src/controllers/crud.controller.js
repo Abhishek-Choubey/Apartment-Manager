@@ -1,16 +1,16 @@
-const post = (model)=> async(req, res)=>{
-    try{
-        const user_id = req.user._id;
-        const item = await model.create({
-            title : req.body.title,
-            price : req.body.price,
-            user_id : user_id,
-        });
-        return res.status(201).send(item);
-    }catch(err){
-        return res.status(500).send({Error : err.message});
-    }
-}
+// const post = (model)=> async(req, res)=>{
+//     try{
+//         const user_id = req.user._id;
+//         const item = await model.create({
+//             title : req.body.title,
+//             price : req.body.price,
+//             user_id : user_id,
+//         });
+//         return res.status(201).send(item);
+//     }catch(err){
+//         return res.status(500).send({Error : err.message});
+//     }
+// }
 
 
 const getAll = (model)=> async(req, res)=>{
@@ -24,7 +24,7 @@ const getAll = (model)=> async(req, res)=>{
 
 const getOne = (model)=> async(req, res)=>{
     try{
-        const item = await model.findById(req.params.id).lean().exec();
+        const item = await model.find({id : req.params.id}).lean().exec();
         return res.send(item);
     }catch(err){
         return res.status(500).send({Error : err.message});
@@ -50,7 +50,7 @@ const patch = (model)=> async(req, res)=>{
 
 module.exports = (model) =>{
     return{
-        post : post(model),
+        // post : post(model),
         getAll : getAll(model),
         getOne : getOne(model),
         delete : Delete(model),

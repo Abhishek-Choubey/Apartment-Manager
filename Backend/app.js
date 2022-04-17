@@ -1,28 +1,39 @@
+require('dotenv').config()
 const express = require("express");
+const cors = require("cors")
 const connect = require("./src/config/db");
-const userController = require("./src/controllers/user.controller");
 const {body} = require("express-validator");
-const productController = require("./src/controllers/product.controller")
 const {register, login} = require("./src/controllers/auth.controller");
+const userController = require("./src/controllers/user.controller");
+const flatController = require("./src/controllers/flat.controller")
+const residentController = require("./src/controllers/resident.controller")
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,            
+    optionSuccessStatus: 200
+}
+app.use(cors());
+
+const port = process.env.PORT || 3000
 app.use(express.json());
 app.use("/user", userController);
-app.use("/product", productController);
+app.use("/resident",  cors(corsOptions), residentController)
 
 app.post("/register",
 body("name").isString().isLength({min : 5}),
 body("email").isEmail(),
-body("password").isLength({min : 6})
+body("password").isLength({min : 6}),
+cors(corsOptions)
 , register)
 
-
-
-app.post("/login", login)
+app.post("/login", cors(corsOptions), login)
+app.use("/flat", cors(corsOptions), flatController)
 const start = async()=>{
     await connect();
-    app.listen(3000, ()=>{
-        console.log("Listening on Port 3000");
+    app.listen(port, ()=>{
+        console.log(`Listening on Port ${port}`);
     })
 }
 start();
